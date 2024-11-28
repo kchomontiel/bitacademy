@@ -80,7 +80,7 @@ class AuthenticationController extends Controller
                 'role' => encryptor('encrypt', $user->role->name),
                 'roleIdentitiy' => encryptor('encrypt', $user->role->identity),
                 'language' => encryptor('encrypt', $user->language),
-                'image' => $user->image ?? 'No Image Found',
+                'image' => $student->image ?? 'user.png',
                 'instructorImage' => $user?->instructor->image ?? 'No instructorImage Found',
             ]
         );

@@ -31,6 +31,7 @@ class ProfileController extends Controller
             $data->profession = $request->profession;
             $data->nationality = $request->nationality;
             $data->language = 'en';
+            $data->image = 'user.png';
 
             if ($request->hasFile('image')) {
                 $imageName = rand(111, 999).time().'.'.$request->image->extension();

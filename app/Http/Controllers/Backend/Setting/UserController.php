@@ -50,6 +50,7 @@ class UserController extends Controller
             $data->full_access = $request->fullAccess;
             $data->status = $request->status;
             $data->password = Hash::make($request->password);
+            $data->image = 'user.png';
 
             if ($request->hasFile('image')) {
                 $imageName = rand(111, 999).time().'.'.$request->image->extension();
@@ -102,6 +103,7 @@ class UserController extends Controller
             $data->language = 'en';
             $data->full_access = $request->fullAccess;
             $data->status = $request->status;
+            $data->image = 'user.png';
 
             if ($request->password) {
                 $data->password = Hash::make($request->password);

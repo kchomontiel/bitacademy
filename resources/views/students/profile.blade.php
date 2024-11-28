@@ -29,7 +29,7 @@
                         </div>
                         <div class="text">
                             <h5>{{$student_info->name_en}}</h5>
-                            <p>{{$student_info->profession?$student_info->profession:'Student'}}</p>
+                            <p>{{$student_info->profession?$student_info->profession:'Estudiante'}}</p>
                         </div>
                     </div>
                 </div>
@@ -122,23 +122,23 @@
                                 </dl>
                                 <dl class="row my-0 info-student-topic">
                                     <dt class="col-sm-4">
-                                        <span>What do you do</span>
+                                        <span>Perfil</span>
                                     </dt>
                                     <dd class="col-sm-8">
-                                        <p>{{$student_info->profession?$student_info->profession:'Student'}}</p>
+                                        <p>{{$student_info->profession?$student_info->profession:'Estudiante'}}</p>
                                     </dd>
                                 </dl>
                                 <dl class="row my-0 info-student-topic">
                                     <dt class="col-sm-4">
-                                        <span>Phone Number</span>
+                                        <span>Número telefonico</span>
                                     </dt>
                                     <dd class="col-sm-8">
-                                        <p>{{$student_info->contact_en?$student_info->contact_en:'+880'}}</p>
+                                        <p>{{$student_info->contact_en?$student_info->contact_en:''}}</p>
                                     </dd>
                                 </dl>
                                 <dl class="row my-0 info-student-topic">
                                     <dt class="col-sm-4">
-                                        <span>Nationality</span>
+                                        <span>Nacionalidad</span>
                                     </dt>
                                     <dd class="col-sm-8">
                                         <p>{{$student_info->nationality}}</p>
@@ -286,6 +286,7 @@
                             <div class="white-bg">
                                 <div class="change-image-wizard">
                                     <div class="image mx-auto">
+                                        <p>{{$student_info->profession?$student_info->profession:'Estudiante'}}</p>
                                         <img src="{{ asset('uploads/students/' . $student_info->image) }}"
                                             alt="User" height="200" width="200">
                                     </div>

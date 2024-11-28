@@ -29,7 +29,7 @@
                         </div>
                         <div class="text">
                             <h5>{{$student_info->name_en}}</h5>
-                            <p>{{$student_info->profession?$student_info->profession:'Student'}}</p>
+                            <p>{{$student_info->profession?$student_info->profession:'Estudiante'}}</p>
                         </div>
                     </div>
                 </div>
