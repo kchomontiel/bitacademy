@@ -9,11 +9,13 @@ class Question extends Model
 {
     use HasFactory;
 
-    public function quiz(){
+    public function quiz()
+    {
         return $this->belongsTo(Quiz::class);
     }
 
-    public function option(){
+    public function option()
+    {
         return $this->hasMany(Option::class);
     }
 

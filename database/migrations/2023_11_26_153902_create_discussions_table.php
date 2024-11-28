@@ -18,10 +18,10 @@ return new class extends Migration
             $table->string('title', 255)->nullable(false);
             $table->text('content');
             $table->timestamps();
-            $table->softDeletes(); 
+            $table->softDeletes();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade'); 
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
         });
     }
 

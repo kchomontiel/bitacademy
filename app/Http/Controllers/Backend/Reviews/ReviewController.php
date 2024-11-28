@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Backend\Reviews;
 
-use App\Models\Review;
 use App\Http\Controllers\Controller;
+use App\Models\Review;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
@@ -13,7 +13,8 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $review=Review::paginate(20);
+        $review = Review::paginate(20);
+
         return view('backend.review.index', compact('review'));
     }
 

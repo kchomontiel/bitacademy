@@ -10,12 +10,12 @@ class Course extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title_en', 'price', 'image'
+        'title_en', 'price', 'image',
     ];
 
     public function courseCategory()
     {
-        return $this->belongsTo(CourseCategory::class); 
+        return $this->belongsTo(CourseCategory::class);
     }
 
     public function instructor()

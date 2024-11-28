@@ -23,7 +23,7 @@ return new class extends Migration
             $table->date('date')->nullable();
             $table->timestamps(); // Created at and Updated at columns
             $table->softDeletes(); // Deleted at column for soft deletes
-    
+
         });
     }
 

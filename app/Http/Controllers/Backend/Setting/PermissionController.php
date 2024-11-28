@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Backend\Setting;
 
 use App\Http\Controllers\Controller;
-use App\Models\Permission;
-use Illuminate\Http\Request;
-use App\Models\Role;
 use App\Http\Requests\Backend\Permission\SaveRequest;
+use App\Models\Permission;
+use App\Models\Role;
 use Exception;
+use Illuminate\Http\Request;
 
 class PermissionController extends Controller
 {
@@ -18,6 +18,7 @@ class PermissionController extends Controller
     {
         $role = Role::findOrFail(encryptor('decrypt', $id));
         $permission = Permission::where('role_id', encryptor('decrypt', $id))->get();
+
         return view('backend.permission.index', compact('role', 'permission'));
     }
 
@@ -36,10 +37,10 @@ class PermissionController extends Controller
     {
         //
     }
- 
+
     public function save(SaveRequest $request, $role)
-    { 
-        try { 
+    {
+        try {
             // delete permission before saved
             Permission::where('role_id', encryptor('decrypt', $role))->delete();
             foreach ($request->permission as $permission) {
@@ -49,10 +50,12 @@ class PermissionController extends Controller
                 $data->save();
             }
             $this->notice::success('Permission saved');
+
             return redirect()->route('role.index');
         } catch (Exception $e) {
             $this->notice::error('Please try again');
             dd($e);
+
             return redirect()->back()->withInput();
         }
     }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Enrollment;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class EnrollmentController extends Controller
@@ -14,6 +13,7 @@ class EnrollmentController extends Controller
     public function index()
     {
         $enrollment = Enrollment::get();
+
         return view('backend.enrollment.index', compact('enrollment'));
     }
 

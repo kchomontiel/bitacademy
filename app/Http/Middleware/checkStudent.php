@@ -2,11 +2,12 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
-use App\Models\Student; //custom
+use App\Models\Student;
+use Closure; //custom
 use Illuminate\Http\Request;
 use Session; //custom
-use App\Models\Permission; //custom
+
+//custom
 
 class checkStudent
 {
@@ -17,15 +18,17 @@ class checkStudent
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!Session::has('userId') || Session::has('userId') == null) {
+        if (! Session::has('userId') || Session::has('userId') == null) {
             return redirect()->route('studentlogOut');
         } else {
             $user = Student::where('status', 1)->where('id', currentUserId())->exists();
-            if (!$user)
+            if (! $user) {
                 return redirect()->route('studentlogOut');
-            else
+            } else {
                 return $next($request);
+            }
         }
+
         return redirect()->route('studentlogOut');
     }
 }

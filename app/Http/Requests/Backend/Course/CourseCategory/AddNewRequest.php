@@ -11,7 +11,7 @@ class AddNewRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true; 
+        return true;
     }
 
     /**
@@ -22,7 +22,7 @@ class AddNewRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_name'=>'required|max:255'
+            'category_name' => 'required|max:255',
         ];
     }
 }

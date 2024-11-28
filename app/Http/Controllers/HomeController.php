@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Course;
-use App\Models\Instructor;
 use App\Models\CourseCategory;
+use App\Models\Instructor;
 
 class HomeController extends Controller
 {

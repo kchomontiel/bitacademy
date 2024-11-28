@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Students;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Student;
 use App\Models\Enrollment;
+use App\Models\Student;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
@@ -14,6 +14,7 @@ class ProfileController extends Controller
     {
         $student_info = Student::find(currentUserId());
         $enrollment = Enrollment::where('student_id', currentUserId())->get();
+
         return view('students.profile', compact('student_info', 'enrollment'));
     }
 
@@ -32,12 +33,13 @@ class ProfileController extends Controller
             $data->language = 'en';
 
             if ($request->hasFile('image')) {
-                $imageName = rand(111, 999) . time() . '.' . $request->image->extension();
+                $imageName = rand(111, 999).time().'.'.$request->image->extension();
                 $request->image->move(public_path('uploads/students'), $imageName);
                 $data->image = $imageName;
             }
             if ($data->save()) {
                 $this->setSession($data);
+
                 return redirect()->back()->with('success', 'Your Changes Have been Saved');
             }
         } catch (Exception $e) {
@@ -52,7 +54,7 @@ class ProfileController extends Controller
             $data = Student::find(currentUserId());
 
             // Validate current password
-            if (!Hash::check($request->current_password, $data->password)) {
+            if (! Hash::check($request->current_password, $data->password)) {
                 return redirect()->back()->with('error', 'Current password is incorrect.');
             }
             // Proceed with password change
@@ -61,10 +63,11 @@ class ProfileController extends Controller
 
             if ($data->save()) {
                 $this->setSession($data);
+
                 return redirect()->back()->with('success', 'Password Have been Changed');
             }
         } catch (Exception $e) {
-            // dd($e); 
+            // dd($e);
             return redirect()->back()->withInput()->with('error', 'Something went wrong. Please try again');
         }
     }
@@ -77,7 +80,7 @@ class ProfileController extends Controller
                 'userName' => encryptor('encrypt', $student->name_en),
                 'emailAddress' => encryptor('encrypt', $student->email),
                 'studentLogin' => 1,
-                'image' => $student->image ?? 'No Image Found'
+                'image' => $student->image ?? 'No Image Found',
             ]
         );
     }
@@ -89,7 +92,7 @@ class ProfileController extends Controller
             $user = Student::find(currentUserId());
 
             if ($request->hasFile('image')) {
-                $imageName = rand(111, 999) . time() . '.' . $request->image->extension();
+                $imageName = rand(111, 999).time().'.'.$request->image->extension();
                 $request->image->move(public_path('uploads/students'), $imageName);
                 $user->image = $imageName;
                 $user->save();

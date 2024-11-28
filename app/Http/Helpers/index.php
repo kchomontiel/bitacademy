@@ -6,7 +6,7 @@ function encryptor($action, $string)
 {
     $output = false;
 
-    $encrypt_method = "AES-256-CBC";
+    $encrypt_method = 'AES-256-CBC';
     // pls set your unique hashing key
     $secret_key = 'beatnik#technolgoy_sampreeti';
     $secret_iv = 'beatnik$technolgoy@sampreeti';
@@ -21,10 +21,11 @@ function encryptor($action, $string)
     if ($action == 'encrypt') {
         $output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv);
         $output = base64_encode($output);
-    } else if ($action == 'decrypt') {
+    } elseif ($action == 'decrypt') {
         //decrypt the given text/string/number
         $output = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
     }
+
     return $output;
 }
 

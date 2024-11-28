@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Backend\Quizzes;
 
-use App\Models\Option;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Option;
 use App\Models\Question;
 use Exception;
+use Illuminate\Http\Request;
 
 class OptionController extends Controller
 {
@@ -16,6 +16,7 @@ class OptionController extends Controller
     public function index()
     {
         $option = Option::paginate(20);
+
         return view('backend.quiz.option.index', compact('option'));
     }
 
@@ -25,6 +26,7 @@ class OptionController extends Controller
     public function create()
     {
         $question = Question::get();
+
         return view('backend.quiz.option.create', compact('question'));
     }
 
@@ -41,14 +43,17 @@ class OptionController extends Controller
 
             if ($option->save()) {
                 $this->notice::success('Data Saved');
+
                 return redirect()->route('option.index');
             } else {
                 $this->notice::error('Please try again');
+
                 return redirect()->back()->withInput();
             }
         } catch (Exception $e) {
             dd($e);
             $this->notice::error('Please try again');
+
             return redirect()->back()->withInput();
         }
     }
@@ -68,6 +73,7 @@ class OptionController extends Controller
     {
         $question = Question::get();
         $option = Option::findOrFail(encryptor('decrypt', $id));
+
         return view('backend.quiz.option.edit', compact('question', 'option'));
     }
 
@@ -84,14 +90,17 @@ class OptionController extends Controller
 
             if ($option->save()) {
                 $this->notice::success('Data Saved');
+
                 return redirect()->route('option.index');
             } else {
                 $this->notice::error('Please try again');
+
                 return redirect()->back()->withInput();
             }
         } catch (Exception $e) {
             dd($e);
             $this->notice::error('Please try again');
+
             return redirect()->back()->withInput();
         }
     }
@@ -104,6 +113,7 @@ class OptionController extends Controller
         $data = Option::findOrFail(encryptor('decrypt', $id));
         if ($data->delete()) {
             $this->notice::error('Data Deleted!');
+
             return redirect()->back();
         }
     }

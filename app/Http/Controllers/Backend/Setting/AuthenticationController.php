@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Backend\Setting;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Role;
-use App\Models\User;
-use App\Http\Requests\Authentication\SignUpRequest;
 use App\Http\Requests\Authentication\SignInRequest;
-use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\Authentication\SignUpRequest;
+use App\Models\User;
 use Exception;
+use Illuminate\Support\Facades\Hash;
 
 class AuthenticationController extends Controller
 {
@@ -27,13 +25,15 @@ class AuthenticationController extends Controller
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
             $user->role_id = 4;
-            // dd($request->all()); 
-            if ($user->save())
+            // dd($request->all());
+            if ($user->save()) {
                 return redirect('login')->with('success', 'Successfully Registered');
-            else
+            } else {
                 return redirect('login')->with('danger', 'Please Try Again');
+            }
         } catch (Exception $e) {
             dd($e);
+
             return redirect('login')->with('danger', 'Please Try Again');
         }
     }
@@ -51,13 +51,17 @@ class AuthenticationController extends Controller
                 if ($user->status == 1) {
                     if (Hash::check($request->password, $user->password)) {
                         $this->setSession($user);
+
                         return redirect()->route('dashboard')->with('success', 'Successfully Logged In');
-                    } else
+                    } else {
                         return redirect()->route('login')->with('error', 'Username or Password is wrong!');
-                } else
+                    }
+                } else {
                     return redirect()->route('login')->with('error', 'You are not an active user! Please contact to Authority');
-            } else
+                }
+            } else {
                 return redirect()->route('login')->with('error', 'Username or Password is wrong!');
+            }
         } catch (Exception $e) {
             // dd($e);
             return redirect()->route('login')->with('error', 'Username or Password is wrong!');
@@ -85,6 +89,7 @@ class AuthenticationController extends Controller
     public function signOut()
     {
         request()->session()->flush();
+
         return redirect('login')->with('danger', 'Succesfully Logged Out');
     }
 

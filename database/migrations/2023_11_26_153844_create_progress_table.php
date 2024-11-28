@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('last_viewed_material_id')->index()->nullable();
             $table->timestamp('last_viewed_at')->nullable();
             $table->timestamps();
-            $table->softDeletes();  
+            $table->softDeletes();
 
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');

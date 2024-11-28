@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers\Backend\Quizzes;
 
-use App\Models\Quiz;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Course;
+use App\Models\Quiz;
 use Exception;
+use Illuminate\Http\Request;
 
 class QuizController extends Controller
 {
-    /**  
+    /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $quiz = Quiz::paginate(10);
+
         return view('backend.quiz.quizzes.index', compact('quiz'));
     }
 
@@ -25,6 +26,7 @@ class QuizController extends Controller
     public function create()
     {
         $course = Course::get();
+
         return view('backend.quiz.quizzes.create', compact('course'));
     }
 
@@ -40,14 +42,17 @@ class QuizController extends Controller
 
             if ($quiz->save()) {
                 $this->notice::success('Data Saved');
+
                 return redirect()->route('quiz.index');
             } else {
                 $this->notice::error('Please try again');
+
                 return redirect()->back()->withInput();
             }
         } catch (Exception $e) {
             dd($e);
             $this->notice::error('Please try again');
+
             return redirect()->back()->withInput();
         }
     }
@@ -67,6 +72,7 @@ class QuizController extends Controller
     {
         $course = Course::get();
         $quiz = Quiz::findOrFail(encryptor('decrypt', $id));
+
         return view('backend.quiz.quizzes.edit', compact('course', 'quiz'));
     }
 
@@ -82,14 +88,17 @@ class QuizController extends Controller
 
             if ($quiz->save()) {
                 $this->notice::success('Data Saved');
+
                 return redirect()->route('quiz.index');
             } else {
                 $this->notice::error('Please try again');
+
                 return redirect()->back()->withInput();
             }
         } catch (Exception $e) {
             dd($e);
             $this->notice::error('Please try again');
+
             return redirect()->back()->withInput();
         }
     }
@@ -102,6 +111,7 @@ class QuizController extends Controller
         $data = Quiz::findOrFail(encryptor('decrypt', $id));
         if ($data->delete()) {
             $this->notice::error('Data Deleted!');
+
             return redirect()->back();
         }
     }

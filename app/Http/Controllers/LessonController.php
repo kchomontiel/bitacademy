@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Lesson;
 use App\Models\Course;
-use App\Http\Controllers\Controller;
+use App\Models\Lesson;
 use Illuminate\Http\Request;
 
 class LessonController extends Controller
 {
-    /** 
+    /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $lesson = Lesson::paginate(10);
+
         return view('backend.course.lesson.index', compact('lesson'));
     }
 
@@ -24,6 +24,7 @@ class LessonController extends Controller
     public function create()
     {
         $course = Course::get();
+
         return view('backend.course.lesson.create', compact('course'));
     }
 
@@ -41,14 +42,17 @@ class LessonController extends Controller
 
             if ($lesson->save()) {
                 $this->notice::success('Data Saved');
+
                 return redirect()->route('lesson.index');
             } else {
                 $this->notice::error('Please try again');
+
                 return redirect()->back()->withInput();
             }
         } catch (Exception $e) {
             // dd($e);
             $this->notice::error('Please try again');
+
             return redirect()->back()->withInput();
         }
     }
@@ -68,6 +72,7 @@ class LessonController extends Controller
     {
         $course = Course::get();
         $lesson = Lesson::findOrFail(encryptor('decrypt', $id));
+
         return view('backend.course.lesson.edit', compact('course', 'lesson'));
     }
 
@@ -85,14 +90,17 @@ class LessonController extends Controller
 
             if ($lesson->save()) {
                 $this->notice::success('Data Saved');
+
                 return redirect()->route('lesson.index');
             } else {
                 $this->notice::error('Please try again');
+
                 return redirect()->back()->withInput();
             }
         } catch (Exception $e) {
             // dd($e);
             $this->notice::error('Please try again');
+
             return redirect()->back()->withInput();
         }
     }
@@ -105,6 +113,7 @@ class LessonController extends Controller
         $data = Lesson::findOrFail(encryptor('decrypt', $id));
         if ($data->delete()) {
             $this->notice::error('Data Deleted!');
+
             return redirect()->back();
         }
     }

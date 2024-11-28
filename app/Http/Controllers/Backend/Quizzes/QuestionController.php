@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Quizzes; 
+namespace App\Http\Controllers\Backend\Quizzes;
 
-use App\Models\Question;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Question;
 use App\Models\Quiz;
 use Exception;
+use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
@@ -16,6 +16,7 @@ class QuestionController extends Controller
     public function index()
     {
         $question = Question::paginate(10);
+
         return view('backend.quiz.question.index', compact('question'));
     }
 
@@ -25,6 +26,7 @@ class QuestionController extends Controller
     public function create()
     {
         $quiz = Quiz::get();
+
         return view('backend.quiz.question.create', compact('quiz'));
     }
 
@@ -46,14 +48,17 @@ class QuestionController extends Controller
 
             if ($question->save()) {
                 $this->notice::success('Data Saved');
+
                 return redirect()->route('question.index');
             } else {
                 $this->notice::error('Please try again');
+
                 return redirect()->back()->withInput();
             }
         } catch (Exception $e) {
             dd($e);
             $this->notice::error('Please try again');
+
             return redirect()->back()->withInput();
         }
     }
@@ -72,7 +77,8 @@ class QuestionController extends Controller
     public function edit($id)
     {
         $quiz = Quiz::get();
-        $question = Question::findOrFail(encryptor('decrypt',$id));
+        $question = Question::findOrFail(encryptor('decrypt', $id));
+
         return view('backend.quiz.question.edit', compact('quiz', 'question'));
     }
 
@@ -94,14 +100,17 @@ class QuestionController extends Controller
 
             if ($question->save()) {
                 $this->notice::success('Data Saved');
+
                 return redirect()->route('question.index');
             } else {
                 $this->notice::error('Please try again');
+
                 return redirect()->back()->withInput();
             }
         } catch (Exception $e) {
             dd($e);
             $this->notice::error('Please try again');
+
             return redirect()->back()->withInput();
         }
     }
@@ -114,6 +123,7 @@ class QuestionController extends Controller
         $data = Question::findOrFail(encryptor('decrypt', $id));
         if ($data->delete()) {
             $this->notice::error('Data Deleted!');
+
             return redirect()->back();
         }
     }

@@ -1,10 +1,10 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Carbon\Carbon;
 
 return new class extends Migration
 {
@@ -22,25 +22,25 @@ return new class extends Migration
 
         DB::table('roles')->insert([
             [
-                'name'=> 'Super Admin',
-                'identity'=> 'superadmin',
-                'created_at'=> Carbon::now()
+                'name' => 'Super Admin',
+                'identity' => 'superadmin',
+                'created_at' => Carbon::now(),
             ],
             [
-                'name'=> 'Admin',
-                'identity'=> 'admin',
-                'created_at'=> Carbon::now()
+                'name' => 'Admin',
+                'identity' => 'admin',
+                'created_at' => Carbon::now(),
             ],
             [
-                'name'=> 'Instructor',
-                'identity'=> 'instructor',
-                'created_at'=> Carbon::now()
+                'name' => 'Instructor',
+                'identity' => 'instructor',
+                'created_at' => Carbon::now(),
             ],
             [
-                'name'=> 'Student',
-                'identity'=> 'student',
-                'created_at'=> Carbon::now()
-            ]
+                'name' => 'Student',
+                'identity' => 'student',
+                'created_at' => Carbon::now(),
+            ],
         ]);
     }
 

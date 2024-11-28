@@ -13,9 +13,8 @@ class Controller extends BaseController
 
     public function __construct()
     {
-        $this->notice = new Toastr();
+        $this->notice = new Toastr;
     }
-    
+
     use AuthorizesRequests, ValidatesRequests;
 }
- 

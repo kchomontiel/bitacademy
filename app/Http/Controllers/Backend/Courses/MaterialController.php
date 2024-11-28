@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Backend\Courses;
 
-use App\Models\Material;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Http\Requests\Backend\Course\Materials\AddNewRequest;
 use App\Http\Requests\Backend\Course\Materials\UpdateRequest;
 use App\Models\Lesson;
+use App\Models\Material;
 use Exception;
 
 class MaterialController extends Controller
@@ -18,6 +17,7 @@ class MaterialController extends Controller
     public function index()
     {
         $material = Material::paginate(10);
+
         return view('backend.course.material.index', compact('material'));
     }
 
@@ -26,7 +26,8 @@ class MaterialController extends Controller
      */
     public function create()
     {
-        $lesson= Lesson::get();
+        $lesson = Lesson::get();
+
         return view('backend.course.material.create', compact('lesson'));
     }
 
@@ -44,17 +45,18 @@ class MaterialController extends Controller
             $material->content_url = $request->contentURL;
 
             if ($request->hasFile('content')) {
-                $contentName = rand(111, 999) . time() . '.' . $request->content->extension();
+                $contentName = rand(111, 999).time().'.'.$request->content->extension();
                 $request->content->move(public_path('uploads/courses/contents'), $contentName);
                 $material->content = $contentName;
             }
             if ($material->save()) {
-                return redirect()->route('material.index')->with('success', 'Data Saved');;
+                return redirect()->route('material.index')->with('success', 'Data Saved');
             } else {
                 return redirect()->back()->withInput()->with('error', 'Please try again');
             }
         } catch (Exception $e) {
             dd($e);
+
             return redirect()->back()->withInput()->with('error', 'Please try again');
         }
     }
@@ -72,12 +74,13 @@ class MaterialController extends Controller
      */
     public function edit($id)
     {
-        $lesson= Lesson::get();
+        $lesson = Lesson::get();
         $material = Material::findOrFail(encryptor('decrypt', $id));
+
         return view('backend.course.material.edit', compact('lesson', 'material'));
     }
 
-    /** 
+    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateRequest $request, $id)
@@ -90,20 +93,23 @@ class MaterialController extends Controller
             $material->content_url = $request->contentURL;
 
             if ($request->hasFile('content')) {
-                $contentName = rand(111, 999) . time() . '.' . $request->content->extension();
+                $contentName = rand(111, 999).time().'.'.$request->content->extension();
                 $request->content->move(public_path('uploads/courses/contents'), $contentName);
                 $material->content = $contentName;
             }
             if ($material->save()) {
                 $this->notice::success('Data Saved');
+
                 return redirect()->route('material.index');
             } else {
                 $this->notice::error('Please try again');
+
                 return redirect()->back()->withInput();
             }
         } catch (Exception $e) {
             dd($e);
             $this->notice::error('Please try again');
+
             return redirect()->back()->withInput();
         }
     }
@@ -116,6 +122,7 @@ class MaterialController extends Controller
         $data = Material::findOrFail(encryptor('decrypt', $id));
         if ($data->delete()) {
             $this->notice::error('Data Deleted!');
+
             return redirect()->back();
         }
     }

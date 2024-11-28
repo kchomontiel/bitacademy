@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Backend\Communication;
 
-use App\Models\Message;
 use App\Http\Controllers\Controller;
+use App\Models\Message;
 use Illuminate\Http\Request;
 
 class MessageController extends Controller
@@ -14,6 +14,7 @@ class MessageController extends Controller
     public function index()
     {
         $message = Message::paginate(10);
+
         return view('backend.communication.message.index', compact('message'));
     }
 

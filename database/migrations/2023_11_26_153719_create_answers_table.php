@@ -7,14 +7,14 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations. 
+     * Run the migrations.
      */
     public function up(): void
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_id')->index();
-            $table->unsignedBigInteger('question_id')->index(); 
+            $table->unsignedBigInteger('question_id')->index();
             $table->text('answer')->nullable();
             $table->timestamps();
             $table->softDeletes();

@@ -16,8 +16,8 @@ return new class extends Migration
             $table->bigInteger('student_id')->nullable();
             $table->string('currency')->nullable();
             $table->string('currency_code')->nullable();
-            $table->decimal('amount',10,2)->nullable();
-            $table->decimal('currency_value',10,2)->nullable();
+            $table->decimal('amount', 10, 2)->nullable();
+            $table->decimal('currency_value', 10, 2)->nullable();
             $table->string('method')->nullable();
             $table->string('txnid')->nullable();
             $table->integer('status')->default(0)->comment('0 pending, 1 successfull, 2 fail');

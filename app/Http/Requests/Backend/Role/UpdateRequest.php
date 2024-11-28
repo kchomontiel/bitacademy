@@ -22,11 +22,11 @@ class UpdateRequest extends FormRequest
      */
     public function rules(Request $r): array
     {
-        $id=encryptor('decrypt',$r->uptoken);
+        $id = encryptor('decrypt', $r->uptoken);
+
         return [
-            'Identity'=>'required|max:30|alpha:ascii|unique:roles,identity,'.$id,
-            'Name'=>'required|max:30|unique:roles,name,'.$id
+            'Identity' => 'required|max:30|alpha:ascii|unique:roles,identity,'.$id,
+            'Name' => 'required|max:30|unique:roles,name,'.$id,
         ];
     }
 }
- 

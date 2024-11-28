@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamp('end_date')->nullable();
             $table->enum('status', ['active', 'canceled', 'expired'])->default('active');
             $table->timestamps();
-            $table->softDeletes(); 
+            $table->softDeletes();
 
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');

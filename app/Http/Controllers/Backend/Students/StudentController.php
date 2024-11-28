@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Backend\Students;
 
 use App\Http\Controllers\Controller;
-use App\Models\Student;
-use Illuminate\Http\Request;
 use App\Http\Requests\Backend\Students\AddNewRequest;
 use App\Http\Requests\Backend\Students\UpdateRequest;
 use App\Models\Role;
+use App\Models\Student;
 use Exception;
-use Illuminate\Support\Facades\Hash;
 use File;
+use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
@@ -20,6 +19,7 @@ class StudentController extends Controller
     public function index()
     {
         $data = Student::paginate();
+
         return view('backend.student.index', compact('data'));
     }
 
@@ -29,6 +29,7 @@ class StudentController extends Controller
     public function create()
     {
         $role = Role::get();
+
         return view('backend.student.create', compact('role'));
     }
 
@@ -38,7 +39,7 @@ class StudentController extends Controller
     public function store(AddNewRequest $request)
     {
         try {
-            $student = new Student();
+            $student = new Student;
             $student->name_en = $request->fullName_en;
             $student->name_bn = $request->fullName_bn;
             $student->contact_en = $request->contactNumber_en;
@@ -53,14 +54,15 @@ class StudentController extends Controller
             $student->access_block = $request->accessBlock;
 
             if ($request->hasFile('image')) {
-                $imageName = rand(111, 999) . time() . '.' . $request->image->extension();
+                $imageName = rand(111, 999).time().'.'.$request->image->extension();
                 $request->image->move(public_path('uploads/students'), $imageName);
                 $student->image = $imageName;
             }
-            if ($student->save())
+            if ($student->save()) {
                 return redirect()->route('student.index')->with('success', 'Data Saved');
-            else
+            } else {
                 return redirect()->back()->withInput()->with('error', 'Please try again');
+            }
         } catch (Exception $e) {
             // dd($e);
             return redirect()->back()->withInput()->with('error', 'Please try again');
@@ -108,14 +110,15 @@ class StudentController extends Controller
             $student->access_block = $request->accessBlock;
 
             if ($request->hasFile('image')) {
-                $imageName = rand(111, 999) . time() . '.' . $request->image->extension();
+                $imageName = rand(111, 999).time().'.'.$request->image->extension();
                 $request->image->move(public_path('uploads/students'), $imageName);
                 $student->image = $imageName;
             }
-            if ($student->save())
+            if ($student->save()) {
                 return redirect()->route('student.index')->with('success', 'Data Saved');
-            else
+            } else {
                 return redirect()->back()->withInput()->with('error', 'Please try again');
+            }
         } catch (Exception $e) {
             // dd($e);
             return redirect()->back()->withInput()->with('error', 'Please try again');
@@ -128,11 +131,12 @@ class StudentController extends Controller
     public function destroy($id)
     {
         $data = Student::findOrFail(encryptor('decrypt', $id));
-        $image_path = public_path('uploads/students') . $data->image;
+        $image_path = public_path('uploads/students').$data->image;
 
         if ($data->delete()) {
-            if (File::exists($image_path))
+            if (File::exists($image_path)) {
                 File::delete($image_path);
+            }
 
             return redirect()->back();
         }

@@ -22,9 +22,8 @@ class AddNewRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'Identity'=>'required|max:30|alpha:ascii|unique:roles,identity',
-            'Name'=>'required|max:30|unique:roles,name'
+            'Identity' => 'required|max:30|alpha:ascii|unique:roles,identity',
+            'Name' => 'required|max:30|unique:roles,name',
         ];
     }
 }
- 

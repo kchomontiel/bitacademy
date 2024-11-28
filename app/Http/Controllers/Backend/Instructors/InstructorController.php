@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Backend\Instructors;
 
 use App\Http\Controllers\Controller;
-use App\Models\Instructor;
-use App\Models\User;
 use App\Http\Requests\Backend\Instructors\AddNewRequest;
 use App\Http\Requests\Backend\Instructors\UpdateRequest;
+use App\Models\Instructor;
 use App\Models\Role;
-use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use DB;
 use Exception;
 use File;
-use DB;
+use Illuminate\Support\Facades\Hash;
 
 class InstructorController extends Controller
 {
@@ -21,6 +21,7 @@ class InstructorController extends Controller
     public function index()
     {
         $instructor = Instructor::paginate(10);
+
         return view('backend.instructor.index', compact('instructor'));
     }
 
@@ -30,6 +31,7 @@ class InstructorController extends Controller
     public function create()
     {
         $role = Role::get();
+
         return view('backend.instructor.create', compact('role'));
     }
 
@@ -55,7 +57,7 @@ class InstructorController extends Controller
             $instructor->language = 'en';
             $instructor->access_block = $request->access_block;
             if ($request->hasFile('image')) {
-                $imageName = (Role::find($request->roleId)->name) . '_' .  $request->fullName_en . '_' . rand(999, 111) .  '.' . $request->image->extension();
+                $imageName = (Role::find($request->roleId)->name).'_'.$request->fullName_en.'_'.rand(999, 111).'.'.$request->image->extension();
                 $request->image->move(public_path('uploads/users'), $imageName);
                 $instructor->image = $imageName;
             }
@@ -75,12 +77,15 @@ class InstructorController extends Controller
                 if ($user->save()) {
                     DB::commit();
                     $this->notice::success('Successfully saved');
+
                     return redirect()->route('instructor.index');
                 }
-            } else
+            } else {
                 return redirect()->back()->withInput()->with('error', 'Please try again');
+            }
         } catch (Exception $e) {
             dd($e);
+
             return redirect()->back()->withInput()->with('error', 'Please try again');
         }
     }
@@ -96,7 +101,8 @@ class InstructorController extends Controller
     public function frontShow($id)
     {
         $instructor = Instructor::findOrFail(encryptor('decrypt', $id));
-        // dd($course); 
+
+        // dd($course);
         return view('frontend.instructorProfile', compact('instructor'));
     }
 
@@ -107,6 +113,7 @@ class InstructorController extends Controller
     {
         $role = Role::get();
         $instructor = Instructor::findOrFail(encryptor('decrypt', $id));
+
         return view('backend.instructor.edit', compact('role', 'instructor'));
     }
 
@@ -131,7 +138,7 @@ class InstructorController extends Controller
             $instructor->language = 'en';
             $instructor->access_block = $request->access_block;
             if ($request->hasFile('image')) {
-                $imageName = (Role::find($request->roleId)->name) . '_' .  $request->fullName_en . '_' . rand(999, 111) .  '.' . $request->image->extension();
+                $imageName = (Role::find($request->roleId)->name).'_'.$request->fullName_en.'_'.rand(999, 111).'.'.$request->image->extension();
                 $request->image->move(public_path('uploads/users'), $imageName);
                 $instructor->image = $imageName;
             }
@@ -151,9 +158,11 @@ class InstructorController extends Controller
                 if ($user->save()) {
                     DB::commit();
                     $this->notice::success('Successfully saved');
+
                     return redirect()->route('instructor.index');
                 }
             }
+
             return redirect()->back()->withInput()->with('error', 'Please try again');
         } catch (Exception $e) {
             // dd($e);
@@ -167,11 +176,12 @@ class InstructorController extends Controller
     public function destroy($id)
     {
         $data = Instructor::findOrFail(encryptor('decrypt', $id));
-        $image_path = public_path('uploads/instructors') . $data->image;
+        $image_path = public_path('uploads/instructors').$data->image;
 
         if ($data->delete()) {
-            if (File::exists($image_path))
+            if (File::exists($image_path)) {
                 File::delete($image_path);
+            }
 
             return redirect()->back();
         }
